@@ -24,6 +24,11 @@ import getopt
 import requests
 from lxml import html
 
+try:
+    xrange
+except NameError:
+    xrange = range
+
 
 def main():
     opts = {
@@ -56,16 +61,16 @@ def main():
         else:
             raise getopt.GetoptError('')
     except getopt.GetoptError:
-        print "Usage: %s [OPTION...] URL" % sys.argv[0]
-        print "%s -- Web Scraper" % sys.argv[0]
-        print """
+        print("Usage: %s [OPTION...] URL" % sys.argv[0])
+        print("%s -- Web Scraper" % sys.argv[0])
+        print("""
  Options                       Default values
  -o, --output OUTPUT-DIR       [%(output_dir)s]
  -p, --pages START,STOP        %(pages)s
  -s, --selector CSS-SELECTOR   [%(selector)s]
      --img-suffix SUF1,SUF2    %(img_suffix)s
  
-""" % opts
+""" % opts)
         sys.exit(1)
     webscrap(opts)
 
@@ -95,21 +100,21 @@ def webscrap(opts):
                                      '%04d-%03d-%s' % (page, i, name)))
 
                     if os.path.isfile(output_img):
-                        print 'skipping %s [downloaded]' % \
-                            os.path.basename(output_img)
+                        print('skipping %s [downloaded]' %
+                              os.path.basename(output_img))
                         continue
 
-                    print 'downloading %s' % img.get('src')
+                    print('downloading %s' % img.get('src'))
                     r = requests.get(img.get('src'), headers={'Referer': url})
                     if r.status_code != 200:
-                        print r.status_code
+                        print(r.status_code)
                         continue
 
-                    print 'saving %s' % os.path.basename(output_img)
+                    print('saving %s' % os.path.basename(output_img))
                     with open(output_img, 'w') as fp:
                         fp.write(r.content)
                 except Exception as e:
-                    print e
+                    print(e)
         time.sleep(1)
 
 if __name__ == '__main__':

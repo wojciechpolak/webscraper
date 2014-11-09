@@ -17,4 +17,4 @@ Example Usage
 
 Extract photos from SkyscraperCity forum:
 
-    ./webscraper.py -p 100,122 -o ~/sky-lodz-centrum/ http://www.skyscrapercity.com/showthread.php?t=1659349
+    $ ./webscraper.py -p 100,122 -o ~/sky-lodz-centrum/ http://www.skyscrapercity.com/showthread.php?t=1659349
